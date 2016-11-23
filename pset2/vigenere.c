@@ -8,12 +8,15 @@
 #include <string.h>
 #include <ctype.h>
 
+// prototype
 int isCapsOrSmall(int arg);
 char caesar(char character, int shift, bool isCaps);
 
 int main(int argc, string argv[]){
+    // User input validation
     if(argc == 2){
         string key = argv[1];
+        // validation for key
         for(int l=0, klen=strlen(key); l<klen; l++){
             bool result = isalpha(key[l]);
             if(!result){
@@ -21,23 +24,21 @@ int main(int argc, string argv[]){
                 return 1;
             }
         }
+        // User input
         string str = GetString();
+        
+        // Loop through the string
         for(int i=0, j=0, len=strlen(str), keylegnth = strlen(key); i<len; i++){
             int res = isCapsOrSmall(str[i]);
             if(res == 1 || res == 0){
                 int mod = j % keylegnth;
                 int shift = (int)toupper(key[mod]) - 65;
                 char val = caesar(str[i], shift, res); 
-              // printf("%c -->, %i --> , %i -->, %i --> %c\n", str[i], str[i], mod, shift, val);
-               j++;
-               
+                j++;
                 printf("%c",val);
             }else{
                 printf("%c",str[i]);
             }
-          //  char val = caesar(str[i], shift, res); 
-           // printf("%c -->, %i --> , %i -->, %i --> %c\n", str[i], str[i], mod, shift, val);
-           // printf("%c", val);
            
         }
         printf("\n");

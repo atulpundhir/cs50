@@ -7,13 +7,17 @@
 #include <cs50.h>
 #include <string.h>
 
+//prototype
 int isCapsOrSmall(int arg);
 
 int main(int argc, string argv[]){
+    // User input validation
     if(argc != 1){
         int key = atoi(argv[1]) % 26;
         string str = GetString();
+        // loop through the string
         for(int i=0, len=strlen(str) ; i<len; i++){
+            // check for character is Capital or small
             int res = isCapsOrSmall(str[i]);
             if(res == 1){
                 int delta = (int)str[i]+key;
