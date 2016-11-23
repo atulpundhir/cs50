@@ -10,6 +10,8 @@
 int main(void){
     float n=0.0;
     int k = 0;
+    
+    //User input and validation
     do{
         printf("O hai! How much change is owed?\n");
         n = GetFloat();   
