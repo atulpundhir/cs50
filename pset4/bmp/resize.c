@@ -75,22 +75,31 @@ int main(int argc, char* argv[])
     bi_new.biHeight = bi.biHeight * factor;
     bi_new.biWidth = bi.biWidth * factor;
    
-    // write outfile's BITMAPFILEHEADER
-    fwrite(&bf_new, sizeof(BITMAPFILEHEADER), 1, outptr);
-   
-    // write outfile's BITMAPINFOHEADER
-    fwrite(&bi_new, sizeof(BITMAPINFOHEADER), 1, outptr);
+
     
     
     // determine padding for scanlines
     int padding =  (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
     int new_padding =  (4 - (bi_new.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
-
+    
+    
     //New file's size
-    bi_new.biSizeImage = (bi_new.biWidth * (int)sizeof(RGBTRIPLE) + new_padding) * (bi_new.biHeight);
+    bi_new.biSizeImage = (bi_new.biWidth * (int)sizeof(RGBTRIPLE) + new_padding) * abs(bi_new.biHeight);
+
+  //  bi_new.biSizeImage=(bi_new.biWidth+new_padding)*(abs(bi_new.biHeight)*sizeof(RGBTRIPLE));
+  
+   // bi_new.biSizeImage = (((int)sizeof(RGBTRIPLE) * bi_new.biWidth) + new_padding) * (abs(bi_new.biHeight);
     bf_new.bfSize = bi_new.biSizeImage + 54;
+    
+  //  bi_new.biSizeImage = (((int)sizeof(RGBTRIPLE) * bi_new.biWidth) + new_padding) * (abs(bi_new.biHeight));
+//    bf_new.bfSize = bi_new.biSizeImage + sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
    // bf_new.bfSize = (int)bf.bfSize - (int)bi.biSizeImage * (int)bi_new.biSizeImage;
     
+        // write outfile's BITMAPFILEHEADER
+    fwrite(&bf_new, sizeof(BITMAPFILEHEADER), 1, outptr);
+   
+    // write outfile's BITMAPINFOHEADER
+    fwrite(&bi_new, sizeof(BITMAPINFOHEADER), 1, outptr);
 
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
