@@ -1,0 +1,1 @@
+A Share for <b><?=$stock['name']?></b> costs <b>$<?=$stock['price']?></b>.
